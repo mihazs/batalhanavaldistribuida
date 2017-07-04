@@ -30,6 +30,7 @@ import sockets.server.Server;
  *
  * @author Mihael Zamin
  */
+@Ignore
 public class SocketTest extends TestCase {
     /*
     @Test
@@ -72,11 +73,12 @@ public class SocketTest extends TestCase {
     }
     */
     @Test
+    
     public void testServidor() throws IOException{
     Server s = new Server(9987, "resourcescoordenador");
     Server s2 = new Server(9988, "resourcescoordenadordois");
     
-    s.run();
+    //s.run();
     }
     @Test
     public void testClient() throws IOException, ClassNotFoundException{

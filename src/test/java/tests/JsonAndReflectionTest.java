@@ -24,7 +24,7 @@ import org.junit.Test;
  *
  * @author Mihael Zamin
  */
-
+@Ignore
 public class JsonAndReflectionTest extends TestCase{
 
     @Test
