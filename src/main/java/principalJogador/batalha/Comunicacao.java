@@ -34,6 +34,7 @@ import sockets.server.Server;
  * @author ramon
  */
 public class Comunicacao {
+
     private List<Client> clientes;
     private Server servidor;
     private Client clienteCoordenador;
@@ -44,25 +45,25 @@ public class Comunicacao {
     public Comunicacao() {
         clientes = new ArrayList();
         source = new Source();
-        
+        try {
+            servidor = new Server(portJogadores, "principalJogador.resources");
+        } catch (IOException ex) {
+            Logger.getLogger(Comunicacao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-    
-    
-    
+
     /*Conexão*/
     public void conectaCoordenador() {
         try {
             clienteCoordenador = new Client(this.source, DadosJogador.ipCoordenador, portCoordenador);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(Comunicacao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /*Envios*/
-    
-  
-    
     //Em ataque
     public String enviaAtaque(Ataque ataque) {
         Map<String, Object> map = new HashMap();
@@ -70,75 +71,70 @@ public class Comunicacao {
         Request req = makeRequest("jogador/atacar", map);
         List<Response> res = sendRequestForAll(req);
         String retorno = "errou";
-        
-        for(Response r:res){
+
+        for (Response r : res) {
             retorno = String.valueOf(r.getContent());
-            if(!retorno.toLowerCase().startsWith("errou")){
+            if (!retorno.toLowerCase().startsWith("errou")) {
                 break;
             }
         }
         return retorno;
     }
-    
+
     //Envio de aviso
     public void enviaMorreu(int idMorto) {
         Map<String, Object> map = new HashMap<>();
         map.put("id", idMorto);
         Request req = makeRequest("jogador/notadefalecimento", map);
         sendSimpleRequestForAll(req);
-        
+
     }
-     private List<Response> sendRequestForAll(Request req){
+
+    private List<Response> sendRequestForAll(Request req) {
         List<Response> responses = new ArrayList<>();
-         for(Client c : clientes){
+        clientes.stream().forEach((c) -> {
             Response rs[];
             try {
-                
-                do{
-                c.sendRequest(req);
-                rs = c.getResponses();
-                 
-                }while(!rs[0].getStatus().equals(Status.OK));
+                do {
+                    c.sendRequest(req);
+                    rs = c.getResponses();
+                } while (!rs[0].getStatus().equals(Status.OK));
                 responses.add(rs[0]);
-            } catch (IOException ex) {
-                Logger.getLogger(Comunicacao.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(Comunicacao.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        }
-         return responses;
-     }
-    private void sendSimpleRequestForAll(Request req){
-        for(Client c : clientes){
+        });
+        return responses;
+    }
+
+    private void sendSimpleRequestForAll(Request req) {
+        clientes.stream().forEach((c) -> {
             Response rs[];
             try {
-                
-                do{
-                c.sendRequest(req);
-                rs = c.getResponses();
-                 
-                }while(!rs[0].getStatus().equals(Status.OK));
-            } catch (IOException ex) {
-                Logger.getLogger(Comunicacao.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
+
+                do {
+                    c.sendRequest(req);
+                    rs = c.getResponses();
+
+                } while (!rs[0].getStatus().equals(Status.OK));
+            } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(Comunicacao.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        }
+        });
     }
+
     public void enviaPassarVez() {
         Request req = makeRequest("jogador/passarvez", null);
         sendSimpleRequestForAll(req);
     }
 
-   private Request makeRequest(String path, Map<String, Object> content){
-       Request req = new Request();
-            req.setResourcePath(path);
-            req.setSource(source);
-            req.setContent(content);
-            return req;
-   }
+    private Request makeRequest(String path, Map<String, Object> content) {
+        Request req = new Request();
+        req.setResourcePath(path);
+        req.setSource(source);
+        req.setContent(content);
+        return req;
+    }
 
     /*Recebimento*/
     //Conectando
@@ -148,54 +144,50 @@ public class Comunicacao {
             Request req = makeRequest("lobbyentrada/getmapa", null);
             clienteCoordenador.sendRequest(req);
             Response[] responses = clienteCoordenador.getResponses();
-            for(Response r : responses){
-                if(r.getStatus().equals(Status.OK)){
-                    if(r.getRequest().equals(req)){
+            for (Response r : responses) {
+                if (r.getStatus().equals(Status.OK)) {
+                    if (r.getRequest().equals(req)) {
                         return String.valueOf(r.getContent());
                     }
                 }
             }
-           
+
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Comunicacao.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return "";
+        return "";
     }
 
     public ArrayList<Integer> esperaOrdem() {
         ArrayList<Integer> listOrdem = null;
         try {
             //Espera ordem de jogada do Coordenador
-            clienteCoordenador = new Client(source, DadosJogador.ipCoordenador, portCoordenador+1);
-                    Request req = makeRequest("lobbyconfirmacao/escolhi", null);
-                    clienteCoordenador.sendRequest(req);
-                    Response[] responses = clienteCoordenador.getResponses();
-            for(Response r : responses){
-                if(r.getStatus().equals(Status.OK)){
-                    if(r.getRequest().equals(req)){
+            clienteCoordenador = new Client(source, DadosJogador.ipCoordenador, portCoordenador + 1);
+            Request req = makeRequest("lobbyconfirmacao/escolhi", null);
+            clienteCoordenador.sendRequest(req);
+            Response[] responses = clienteCoordenador.getResponses();
+            for (Response r : responses) {
+                if (r.getStatus().equals(Status.OK)) {
+                    if (r.getRequest().equals(req)) {
                         new Thread(servidor).start();
-                        OrdemIp oip = (OrdemIp)(r.getContent());
+                        OrdemIp oip = (OrdemIp) (r.getContent());
                         listOrdem = new ArrayList(oip.getOrdem());
-                        HashBiMap<Integer, String> mips = HashBiMap.create(oip.getIp());
-                        BiMap<String, Integer> bmips = mips.inverse();
+                        BiMap<String, Integer> bmips = HashBiMap.create(oip.getIp()).inverse();
                         List<String> ifIps = Client.getInterfaceIps();
                         Integer thisid = null;
-                        for(String str:ifIps){
-                            
-                            if((thisid = bmips.get(str)) != null){
-                               servidor = new Server(portJogadores+thisid, str);
-                               new Thread(servidor).start();
-                               break;
+                        new Thread(servidor).start();
+                        for (String str : ifIps) {
+                            if ((thisid = bmips.get(str)) != null) {
+                                break;
                             }
                         }
-                        
                         Thread.sleep(1000);
-                               
                         Set<Entry<String, Integer>> ips = bmips.entrySet();
-                        for(Entry i: ips){
-                            if(i.getValue().equals(thisid))
+                        for (Entry i : ips) {
+                            if (i.getValue().equals(thisid)) {
                                 continue;
-                            clientes.add(new Client(this.source, String.valueOf(i.getKey()), Integer.parseInt(String.valueOf(i.getValue()))+portJogadores));
+                            }
+                            clientes.add(new Client(this.source, String.valueOf(i.getKey()), portJogadores));
                             Thread.sleep(500);
                         }
                         break;
@@ -207,32 +199,30 @@ public class Comunicacao {
         }
         return listOrdem;
     }
-/*
-    //sendo atacado
-    public String recebeAcao(int idJogando) {
-        //Espera do jogador atual sua ação
-        try {    Thread.sleep(300);} catch (InterruptedException ex) {}
+    /*
+     //sendo atacado
+     public String recebeAcao(int idJogando) {
+     //Espera do jogador atual sua ação
+     try {    Thread.sleep(300);} catch (InterruptedException ex) {}
         
-        return "passarVez";
-    }
+     return "passarVez";
+     }
 
     
-    //Respondendo a ataques
-    public void enviaMeAcertou(int ID) {
-        //Envia ao atacante a mensagem informando que ele acertou o ataque
-        System.out.println("acertou-" + ID);
-    }
+     //Respondendo a ataques
+     public void enviaMeAcertou(int ID) {
+     //Envia ao atacante a mensagem informando que ele acertou o ataque
+     System.out.println("acertou-" + ID);
+     }
     
-    public void enviaMorri(int ID) {
-        //Envia ao atacante a mensagem informando que eu morri
-        System.out.println("morri-" + ID);
-    }
+     public void enviaMorri(int ID) {
+     //Envia ao atacante a mensagem informando que eu morri
+     System.out.println("morri-" + ID);
+     }
 
-    public void enviaErrou(int ID) {
-        //Envia ao atacante a mensagem informando que ele errou o ataque
-        System.out.println("errou-" + ID);
-    }*/
-    
-    
-    
+     public void enviaErrou(int ID) {
+     //Envia ao atacante a mensagem informando que ele errou o ataque
+     System.out.println("errou-" + ID);
+     }*/
+
 }
