@@ -172,30 +172,25 @@ public class Comunicacao {
                         new Thread(servidor).start();
                         OrdemIp oip = (OrdemIp) (r.getContent());
                         listOrdem = new ArrayList(oip.getOrdem());
-                        BiMap<String, Integer> bmips = HashBiMap.create(oip.getIp()).inverse();
                         List<String> ifIps = Client.getInterfaceIps();
-                        Set<Entry<String, Integer>> ips = bmips.entrySet();
+                        Set<Entry<Integer, String>> ips = oip.getIp().entrySet();
                         new Thread(servidor).start();
-                        
                         Thread.sleep(1000);
-                        boolean isme = false;
-                        boolean find = false;
+                        Integer idMe = null;
                         for (Entry i : ips) {
-                            String k = String.valueOf(i.getKey());
-                            if(!find){
-                            for(String ip: ifIps){
+                            String k = String.valueOf(i.getValue()).replaceAll("/", "");
+                            i.setValue(k);
+                            for (String ip : ifIps) {
                                 if (k.contains(ip)) {
-                                    isme = true; 
-                                    find = true;
+                                    ips.remove(i);
                                     break;
                                 }
                             }
-                            }
-                            if(!isme){
+                        }
+                        for (Entry i : ips) {
+                            String k = String.valueOf(i.getValue());
                             clientes.add(new Client(this.source, k, portJogadores));
                             Thread.sleep(500);
-                            isme = false;
-                            }
                         }
                         break;
                     }
@@ -206,30 +201,5 @@ public class Comunicacao {
         }
         return listOrdem;
     }
-    /*
-     //sendo atacado
-     public String recebeAcao(int idJogando) {
-     //Espera do jogador atual sua ação
-     try {    Thread.sleep(300);} catch (InterruptedException ex) {}
-        
-     return "passarVez";
-     }
-
-    
-     //Respondendo a ataques
-     public void enviaMeAcertou(int ID) {
-     //Envia ao atacante a mensagem informando que ele acertou o ataque
-     System.out.println("acertou-" + ID);
-     }
-    
-     public void enviaMorri(int ID) {
-     //Envia ao atacante a mensagem informando que eu morri
-     System.out.println("morri-" + ID);
-     }
-
-     public void enviaErrou(int ID) {
-     //Envia ao atacante a mensagem informando que ele errou o ataque
-     System.out.println("errou-" + ID);
-     }*/
 
 }
