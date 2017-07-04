@@ -174,21 +174,28 @@ public class Comunicacao {
                         listOrdem = new ArrayList(oip.getOrdem());
                         BiMap<String, Integer> bmips = HashBiMap.create(oip.getIp()).inverse();
                         List<String> ifIps = Client.getInterfaceIps();
-                        Integer thisid = null;
-                        new Thread(servidor).start();
-                        for (String str : ifIps) {
-                            if ((thisid = bmips.get(str)) != null) {
-                                break;
-                            }
-                        }
-                        Thread.sleep(1000);
                         Set<Entry<String, Integer>> ips = bmips.entrySet();
+                        new Thread(servidor).start();
+                        
+                        Thread.sleep(1000);
+                        boolean isme = false;
+                        boolean find = false;
                         for (Entry i : ips) {
-                            if (i.getValue().equals(thisid)) {
-                                continue;
+                            String k = String.valueOf(i.getKey());
+                            if(!find){
+                            for(String ip: ifIps){
+                                if (k.contains(ip)) {
+                                    isme = true; 
+                                    find = true;
+                                    break;
+                                }
                             }
-                            clientes.add(new Client(this.source, String.valueOf(i.getKey()), portJogadores));
+                            }
+                            if(!isme){
+                            clientes.add(new Client(this.source, k, portJogadores));
                             Thread.sleep(500);
+                            isme = false;
+                            }
                         }
                         break;
                     }
