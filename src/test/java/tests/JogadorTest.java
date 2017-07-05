@@ -65,24 +65,22 @@ public class JogadorTest {
     }
     
     @Test
-   // @Ignore
+    @Ignore
     public void testJogador(){
         telaPrincipal.main(new String[0]);
     }
     
     @Test
-    @Ignore
+    // @Ignore
     public void testJogadorCoordenador(){
-      Thread t = new Thread(new Runnable() {
-
-          @Override
-          public void run() {
-              System.out.println("Iniciando Coordenador");
-              CoordenadorServer.main(new String[0]);
-              
-          }
-      });
+        try {
+            Server servidor = new Server(9987, "resourcescoordenadorteste");
+            Thread t = new Thread(servidor);
       t.start();
+        } catch (IOException ex) {
+            Logger.getLogger(JogadorTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
         try {
             Thread.sleep(10);
         } catch (InterruptedException ex) {
