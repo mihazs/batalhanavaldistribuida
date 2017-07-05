@@ -23,6 +23,7 @@ import sockets.server.Server;
 public class JogadorTest {
     
     @Test
+    @Ignore
     public void testOneCoordenador(){
         final int port = 9987;
         try {

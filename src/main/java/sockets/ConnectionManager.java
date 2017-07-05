@@ -43,7 +43,7 @@ public abstract class ConnectionManager {
         
     }
     public ConnectionManager(Socket socket) throws IOException{
-        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Estabelecendo nova conexão por socket com {0}}", socket.getRemoteSocketAddress());
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Estabelecido conexão com {0}}", socket.getRemoteSocketAddress());
        this.socket = socket; 
        output = new ObjectOutputStream(socket.getOutputStream());
        input = new ObjectInputStream(socket.getInputStream());

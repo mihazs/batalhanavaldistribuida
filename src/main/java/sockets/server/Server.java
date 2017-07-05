@@ -65,7 +65,9 @@ public class Server implements Runnable {
         this(port, "resources");
     }
     public Server(int port, String resourcePackage) throws IOException{
+        
         serversocket = new ServerSocket(port);
+        
         connections = new ArrayList<>();
         stop = false;
         messageProcessor = new MessageProcessor(resourcePackage, serverInformation);
@@ -112,12 +114,13 @@ public class Server implements Runnable {
     @Override
     public void run(){
         RequestHandler rh;
-       
+       Logger.getLogger(Server.class.getName()).log(Level.INFO, "[Server]iniciado");
         while(!stop){
             try {
                 rh = new RequestHandler(serversocket.accept(), this, connections.size());
+                Logger.getLogger(Server.class.getName()).log(Level.INFO, "[Server] Aguardando por novas conexões");
                 connections.add(rh);
-                Logger.getLogger(Server.class.getName()).log(Level.INFO, "Conex\u00e3o estabelecida com: {0}", rh.getSocket().getInetAddress().toString());
+                Logger.getLogger(Server.class.getName()).log(Level.INFO, "[Server]Conex\u00e3o estabelecida com: {0}", rh.getSocket().getInetAddress().toString());
                 new Thread(rh).start();
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
