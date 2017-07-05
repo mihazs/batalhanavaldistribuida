@@ -160,12 +160,14 @@ public class Comunicacao {
 
     public ArrayList<Integer> esperaOrdem() {
         ArrayList<Integer> listOrdem = null;
+        Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "entrando em esperaOrdem");
         try {
             //Espera ordem de jogada do Coordenador
             clienteCoordenador = new Client(source, DadosJogador.ipCoordenador, portCoordenador + 1);
             Request req = makeRequest("lobbyconfirmacao/escolhi", null);
             clienteCoordenador.sendRequest(req);
             Response[] responses = clienteCoordenador.getResponses();
+            Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Verificando respostas de esperaOrdem");
             for (Response r : responses) {
                 if (r.getStatus().equals(Status.OK)) {
                     if (r.getRequest().equals(req)) {
@@ -177,11 +179,13 @@ public class Comunicacao {
                         new Thread(servidor).start();
                         Thread.sleep(1000);
                         Integer idMe = null;
+                        Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Checando se existe ips da lista de ordem \n " + ips.toString() + " \n na lista: \n{0}\n", ifIps.toString());
                         for (Entry i : ips) {
                             String k = String.valueOf(i.getValue()).replaceAll("/", "");
                             i.setValue(k);
                             for (String ip : ifIps) {
                                 if (k.contains(ip)) {
+                                    Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Removendo ip: {0}", ip);
                                     ips.remove(i);
                                     break;
                                 }
