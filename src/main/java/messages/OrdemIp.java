@@ -34,6 +34,11 @@ public class OrdemIp {
     public void setIp(Map<Integer, String> ip) {
         this.ip = new HashMap(ip);
     }
+
+    @Override
+    public String toString() {
+        return "OrdemIp{" + "ordem=" + ordem + ", ip=" + ip + '}';
+    }
     
     
     

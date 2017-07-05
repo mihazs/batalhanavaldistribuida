@@ -176,7 +176,9 @@ public class Comunicacao {
                         new Thread(servidor).start();
                         Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Servidor do jogador iniciado.");
                         Thread.sleep(15000);
+                        Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Content da resposta {0}", r.getContent());
                         OrdemIp oip = (OrdemIp) (r.getContent());
+                        Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Valor de OrdemIp {0}", oip);
                         listOrdem = new ArrayList(oip.getOrdem());
                         List<String> ifIps = Client.getInterfaceIps();
                         Set<Entry<Integer, String>> ips = Collections.synchronizedSet(oip.getIp().entrySet());
