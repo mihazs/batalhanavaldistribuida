@@ -236,7 +236,7 @@ public class telaPrincipal extends javax.swing.JFrame {
         tP.setVisible(true);
         
         
-        
+        System.out.println("Passou aqui antes do while");
         while (tP.getBatalhaNaval().lenVetorOrdem() == 0) {
             try {    Thread.sleep(300);} catch (InterruptedException ex) {}
         }

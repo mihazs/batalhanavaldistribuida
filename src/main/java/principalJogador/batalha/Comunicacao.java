@@ -76,6 +76,7 @@ public class Comunicacao {
 
         for(Response r : res){
             retorno = String.valueOf(r.getContent());
+            Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Uma resposta do ataque {0}", retorno);
             if(!retorno.contains("errou"))
            break;
         }
