@@ -177,9 +177,10 @@ public class Comunicacao {
                         listOrdem = new ArrayList(oip.getOrdem());
                         List<String> ifIps = Client.getInterfaceIps();
                         Set<Entry<Integer, String>> ips = Collections.synchronizedSet(oip.getIp().entrySet());
-                        new Thread(servidor).start();
+                        Thread tservidor = new Thread(servidor);
+                        tservidor.start();
                         Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Servidor do jogador iniciado.");
-                        Thread.sleep(5000);
+                        Thread.sleep(15000);
                         Integer idMe = null;
                         Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Checando se existe ips da lista de ordem \n " + ips.toString() + " \n na lista: \n{0}\n", ifIps.toString());
                         List<String> hosts = new ArrayList<>();
