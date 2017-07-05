@@ -54,6 +54,7 @@ public class RequestHandler extends ConnectionManager implements Runnable {
         if(rw.isBroadcast()){
             server.broadcast(rw, this);
         }
+        Logger.getLogger(RequestHandler.class.getName()).log(Level.INFO, "Requisicao Recebida: {0}", rw.getResponseObject().getRequest());
         send.add(rw);
     }
     public void sendResponse(ResponseWrapper rw) throws IOException{

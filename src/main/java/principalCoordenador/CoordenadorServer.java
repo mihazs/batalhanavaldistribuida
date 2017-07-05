@@ -23,17 +23,22 @@ public class CoordenadorServer {
             
             Server server1 = new Server(port, "resourcescoordenador");
             DadosCoordenador.timer = new EndLobby();
-            DadosCoordenador.timer.Executar(60);
+            DadosCoordenador.timer.Executar(20);
             new Thread(server1).start();
             while(!DadosCoordenador.timer.getDone())
-                Thread.sleep(500);
+            {
+                Thread.sleep(5);
+                DadosCoordenador.timer.getTimer();
+            }
+            Thread.sleep(5000);
             server1.stopServer();
             Server server2 = new Server(port+1, "resourcescoordenadorconf");
             new Thread(server2).start();
-            DadosCoordenador.timer.Executar(60);
+            DadosCoordenador.timer.Executar(50);
             while(!DadosCoordenador.timer.getDone())
-                Thread.sleep(500);
-            
+                Thread.sleep(5);
+            Thread.sleep(5000);
+            server2.stopServer();
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(CoordenadorServer.class.getName()).log(Level.SEVERE, null, ex);
         }

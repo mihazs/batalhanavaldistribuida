@@ -15,16 +15,20 @@ import java.util.TimerTask;
 public class EndLobby {
     private Timer timer;
     private boolean Done; 
+  
     
     public void Executar(int seconds) {
         Done = false;
         timer = new Timer();
         timer.schedule(new RemindTask(), seconds*1000);    
+       
     }
 
     class RemindTask extends TimerTask {
+        
         @Override
         public void run() {
+            
             Done = true;
             System.out.println("TimerTask: Fim do Lobby!");
             timer.cancel(); //Terminate the timer thread
@@ -34,4 +38,13 @@ public class EndLobby {
     public boolean getDone(){
         return Done;
     }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
+    
 }

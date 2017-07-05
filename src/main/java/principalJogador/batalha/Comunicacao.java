@@ -72,11 +72,10 @@ public class Comunicacao {
         List<Response> res = sendRequestForAll(req);
         String retorno = "errou";
 
-        for (Response r : res) {
+        for(Response r : res){
             retorno = String.valueOf(r.getContent());
-            if (!retorno.toLowerCase().startsWith("errou")) {
-                break;
-            }
+            if(!retorno.contains("errou"))
+           break;
         }
         return retorno;
     }

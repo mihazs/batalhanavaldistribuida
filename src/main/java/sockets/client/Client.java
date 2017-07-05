@@ -34,7 +34,7 @@ public class Client extends ConnectionManager{
     
     public Client(Source source, String host, int port) throws UnknownHostException, IOException{
         super(new Socket(InetAddress.getByName(host), port));
-        this.getSocket().setSoTimeout(10000);
+        this.getSocket().setSoTimeout(0);
         this.source = source;
     }
     
@@ -51,6 +51,7 @@ public class Client extends ConnectionManager{
         do{
         r = getMessageProcessor().processResponse(String.valueOf( getInput().readObject()));
         respostas.add(r);
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Resposta recebida: {0}", r);
         this.setSource(r.getRequest().getSource());
         }while(r.getInQueue() > 0);
         return respostas.toArray(new Response[0]);

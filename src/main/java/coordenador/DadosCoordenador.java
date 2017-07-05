@@ -20,6 +20,7 @@ public class DadosCoordenador {
     public static Resources resources = new Resources();
     
     public static void distribuiMapas(){
+        
         try {
             resources.setResources();
         } catch (Exception ex) {

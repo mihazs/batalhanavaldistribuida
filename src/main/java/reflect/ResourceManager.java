@@ -92,6 +92,9 @@ public class ResourceManager {
     }
 
     public Object invokeResource(String path, Map<String, Object> args, Source source, ServerInformation serverInfo) throws ProtocolException {
+        if(args == null){
+            args = new CaseInsensitiveMap<>();
+        }
         Method m;
         try {
             m = getMethodByUri(path);
@@ -99,7 +102,9 @@ public class ResourceManager {
             Logger.getLogger(ResourceManager.class.getName()).log(Level.SEVERE, null, ex);
             throw new ProtocolException(Status.NOT_FOUND, "Não há recurso para o caminho solicitado.");
         }
+        
         args = new CaseInsensitiveMap(args);
+        
         if (m == null) {
              throw new ProtocolException(Status.NOT_FOUND, "Não há recurso para o caminho solicitado.");
             
@@ -123,19 +128,22 @@ public class ResourceManager {
                 try {
                     Class c = m.getDeclaringClass();
                     Object o = c.newInstance();
-                    if(source != null){
+                    
                     Field[] fields = c.getFields();
                     for(Field f: fields){
+                        
                         if(f.getAnnotation(UserInfo.class) != null){
+                            if(source != null){
                             f.setAccessible(true);
                             f.set(o, source);
+                            }
                         }else if(f.getAnnotation(ServerInfo.class) != null){
                             if (serverInfo != null) {
                                 f.setAccessible(true);
                                 f.set(o, serverInfo);
                             }
                         }
-                    }
+                    
                     }
                     return m.invoke(o, a);
                 } catch (IllegalAccessException | InvocationTargetException | InstantiationException ex) {

@@ -15,10 +15,10 @@ import java.util.Random;
  * @author PedroHenrique
  */
 public class Resources {
-    private ArrayList<Jogador> players;
+    private ArrayList<Jogador> players = new ArrayList<>();
     
     private ArrayList<Integer> ordem = null;
-    private ArrayList<Integer> conectados;
+    private ArrayList<Integer> conectados = new ArrayList<>();
     private Mapa mapa;
     Random rand = new Random();
     private int n;
@@ -100,6 +100,7 @@ public class Resources {
     public int getNumeroJogadores(){
         return n;
     }
+
     
   
 }

@@ -24,21 +24,26 @@ import reflect.annotations.UserInfo;
 public class LobbyEntradaResource {
 
     @UserInfo
-    Source source;
+    public Source source;
 
     @Path("getmapa")
     public String getMapa() {
         source.setId(DadosCoordenador.lastId);
         DadosCoordenador.lastId++;
+        Logger.getLogger(LobbyEntradaResource.class.getName()).log(Level.INFO, "Entrando na fila de espera: id {0}",source.getId() );
         Jogador j = new Jogador();
         j.setId(source.getId());
         DadosCoordenador.resources.addPlayer(j);
         while (!DadosCoordenador.timer.getDone()) {
+           
+                
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
                 Logger.getLogger(LobbyEntradaResource.class.getName()).log(Level.SEVERE, null, ex);
             }
+                
+            
         }
         DadosCoordenador.distribuiMapas();
         return j.getMapa();

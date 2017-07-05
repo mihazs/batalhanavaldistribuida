@@ -53,6 +53,7 @@ public class Server implements Runnable {
 
     public void setServerInformation(ServerInformation serverInformation) {
         this.serverInformation = serverInformation;
+        this.messageProcessor.setServerInformation(serverInformation);
     }
     
     
@@ -67,7 +68,7 @@ public class Server implements Runnable {
         serversocket = new ServerSocket(port);
         connections = new ArrayList<>();
         stop = false;
-        messageProcessor = new MessageProcessor(resourcePackage);
+        messageProcessor = new MessageProcessor(resourcePackage, serverInformation);
         
     }
 
@@ -122,6 +123,9 @@ public class Server implements Runnable {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        connections.stream().forEach((rehandle) -> {
+            rehandle.stopHandling();
+        });
         
         
     }
