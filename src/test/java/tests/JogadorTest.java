@@ -67,12 +67,14 @@ public class JogadorTest {
     @Test
    // @Ignore
     public void testJogador(){
+        Logger.getGlobal().setLevel(Level.SEVERE);
         telaPrincipal.main(new String[0]);
     }
     
     @Test
     @Ignore
     public void testJogadorCoordenador(){
+        Logger.getGlobal().setLevel(Level.SEVERE);
         try {
             Server servidor = new Server(9987, "resourcescoordenadorteste");
             Thread t = new Thread(servidor);

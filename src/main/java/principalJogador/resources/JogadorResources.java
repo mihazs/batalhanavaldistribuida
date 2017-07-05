@@ -26,8 +26,8 @@ public class JogadorResources {
     @Path("atacar")
     public String ataque(@ParamName("ataque") Ataque a){
         String s = "";
-       // int feedbackTiro = DadosJogador.tp.getBatalhaNaval().recebeTiro(a.getLinha(), a.getColuna());
-        int feedbackTiro = 0;
+       int feedbackTiro = DadosJogador.tp.getBatalhaNaval().recebeTiro(a.getLinha(), a.getColuna());
+        
         switch(feedbackTiro){
             case 0:
             s = "acertou";
