@@ -199,7 +199,6 @@ public class Comunicacao {
                             while(true){
                             try{
                                 c  = new Client(this.source, k, portJogadores, 5000);
-                                
                                 Thread.sleep(500);
                                 break;
                                 } catch(SocketTimeoutException ex){
