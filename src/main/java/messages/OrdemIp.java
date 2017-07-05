@@ -32,7 +32,7 @@ public class OrdemIp {
     }
 
     public void setIp(Map<Integer, String> ip) {
-        this.ip = ip;
+        this.ip = new HashMap(ip);
     }
     
     
