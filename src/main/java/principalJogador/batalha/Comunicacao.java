@@ -11,6 +11,7 @@ import coordenador.DadosCoordenador;
 import java.io.IOException;
 import principalJogador.gui.telaPrincipal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -172,7 +173,7 @@ public class Comunicacao {
                         OrdemIp oip = (OrdemIp) (r.getContent());
                         listOrdem = new ArrayList(oip.getOrdem());
                         List<String> ifIps = Client.getInterfaceIps();
-                        Set<Entry<Integer, String>> ips = oip.getIp().entrySet();
+                        Set<Entry<Integer, String>> ips = Collections.synchronizedSet(oip.getIp().entrySet());
                         new Thread(servidor).start();
                         Thread.sleep(1000);
                         Integer idMe = null;

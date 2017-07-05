@@ -6,6 +6,7 @@
 package reflect;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,8 @@ public class ServerInformation {
     private Map<Integer, String> hostsConnected;
 
     public ServerInformation() {
-        hostsConnected = new HashMap();
+        hostsConnected = Collections.synchronizedMap(new HashMap());
+       
     }
 
     public Map<Integer, String> getHostsConnected() {

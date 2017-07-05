@@ -25,12 +25,12 @@ public class JogadorTest {
     }
     
     @Test
-    @Ignore
     public void testJogador(){
         telaPrincipal.main(new String[0]);
     }
     
     @Test
+    @Ignore
     public void testJogadorCoordenador(){
       Thread t = new Thread(new Runnable() {
 

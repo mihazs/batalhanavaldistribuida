@@ -6,6 +6,7 @@
 package messages;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,8 @@ import java.util.Map;
  * @author Mihael Zamin
  */
 public class OrdemIp {
-    private List<Integer> ordem = new ArrayList();
-    private Map<Integer, String> ip = new HashMap();
+    private List<Integer> ordem = Collections.synchronizedList(new ArrayList());
+    private Map<Integer, String> ip = Collections.synchronizedMap(new HashMap());
 
     public List<Integer> getOrdem() {
         return ordem;
