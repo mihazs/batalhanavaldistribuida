@@ -153,7 +153,7 @@ public class telaPosicionaBarco extends javax.swing.JFrame {
             //tP.batalhaNaval.Pronto = true;
             
             
-            ordem = tP.comunicacao.esperaOrdem();
+            ordem = tP.Comunicacao.esperaOrdem();
             tP.getBatalhaNaval().iniciaOrdem(ordem);
             this.setVisible(false);
             x = true;
