@@ -164,7 +164,7 @@ public class Comunicacao {
         Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "entrando em esperaOrdem");
         try {
             //Espera ordem de jogada do Coordenador
-            clienteCoordenador = new Client(source, DadosJogador.ipCoordenador, portCoordenador + 1);
+          //  clienteCoordenador = new Client(source, DadosJogador.ipCoordenador, portCoordenador + 1);
             Request req = makeRequest("lobbyconfirmacao/escolhi", null);
             clienteCoordenador.sendRequest(req);
             Response[] responses = clienteCoordenador.getResponses();

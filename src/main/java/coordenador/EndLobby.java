@@ -14,14 +14,16 @@ import java.util.TimerTask;
  */
 public class EndLobby {
     private Timer timer;
-    private boolean Done; 
-  
+    private boolean done = false; 
+    private boolean triggered = false;
     
     public void executar(int seconds) {
-        Done = false;
-        timer = new Timer();
-        timer.schedule(new RemindTask(), seconds*1000);    
-       
+       if(!triggered){
+           done = false;
+           triggered = true;
+           timer = new Timer();
+           timer.schedule(new RemindTask(), seconds*1000);    
+        }
     }
 
     class RemindTask extends TimerTask {
@@ -29,14 +31,14 @@ public class EndLobby {
         @Override
         public void run() {
             
-            Done = true;
+            done = true;
             System.out.println("TimerTask: Fim do Lobby!");
             timer.cancel(); //Terminate the timer thread
         }
     }
     
     public boolean getDone(){
-        return Done;
+        return done;
     }
 
     public Timer getTimer() {

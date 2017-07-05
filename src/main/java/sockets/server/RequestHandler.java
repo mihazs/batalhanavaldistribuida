@@ -30,6 +30,7 @@ public class RequestHandler extends ConnectionManager implements Runnable {
     private Queue<ResponseWrapper> send;
     private boolean stop;
     private final UUID uid;
+    private int id;
     public boolean isStopped() {
         return stop;
     }
