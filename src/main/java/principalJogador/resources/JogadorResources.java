@@ -51,6 +51,8 @@ public class JogadorResources {
     
     @Path("passarvez")
     public void passarVez(){
+        System.out.println("Entrando em passar a vez");
         DadosJogador.tp.getBatalhaNaval().updtJogadorAtual();
+        System.out.println("Saindo em passar a vez");
     }
 }
