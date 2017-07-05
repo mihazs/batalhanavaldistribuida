@@ -32,7 +32,9 @@ public class Client extends ConnectionManager{
     private Source source;
     
     public Client(Source source, String host, int port) throws UnknownHostException, IOException{
+        
         this(source, host, port, 0);
+        
     }
     public Client(Source source, String host, int port, int timeout) throws UnknownHostException, IOException{
         super(new Socket(InetAddress.getByName(host), port));
@@ -64,6 +66,7 @@ public class Client extends ConnectionManager{
         request.setSource(this.getSource());
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Enviando requisi\u00e7\u00e3o: {0}", request.toString());
         getOutput().writeObject(getMessageProcessor().prepareRequest(request));
+        getOutput().flush();
         
     }
     public static List<String> getInterfaceIps() throws SocketException{
@@ -80,6 +83,14 @@ public class Client extends ConnectionManager{
             }
         }
         return retorno;
+    }
+
+    public void stop() {
+        try {
+            this.getSocket().close();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
    
     

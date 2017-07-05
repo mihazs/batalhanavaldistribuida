@@ -105,6 +105,12 @@ public class Response {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Response{" + "request=" + request + ", content=" + content + ", status=" + status + ", inQueue=" + inQueue + ", broadcast=" + broadcast + '}';
+    }
+    
     
     
 }

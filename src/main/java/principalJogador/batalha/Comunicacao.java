@@ -176,6 +176,7 @@ public class Comunicacao {
             Response r = responses[0];
                 if (r.getStatus().equals(Status.OK)) {
                     if (r.getRequest().equals(req)) {
+                        clienteCoordenador.stop();
                         new Thread(servidor).start();
                         Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Servidor do jogador iniciado.");
                         Thread.sleep(15000);
@@ -202,8 +203,10 @@ public class Comunicacao {
                         for (String k : hosts) {
                             Client c = null;
                             try{
+                                Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Solicitando conexão");
                                 c  = new Client(this.source, k, portJogadores);
-                                Thread.sleep(500);
+                                while(!c.getSocket().isConnected())
+                                    Thread.sleep(500);
                                 break;
                                 } catch(SocketTimeoutException ex){
                                     Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Socket do cliente timed out");

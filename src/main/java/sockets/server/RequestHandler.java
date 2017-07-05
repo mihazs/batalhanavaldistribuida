@@ -55,7 +55,7 @@ public class RequestHandler extends ConnectionManager implements Runnable {
         if(rw.isBroadcast()){
             server.broadcast(rw, this);
         }
-        Logger.getLogger(RequestHandler.class.getName()).log(Level.INFO, "Requisicao Recebida: {0}", rw.getResponseObject().getRequest());
+        Logger.getLogger(RequestHandler.class.getName()).log(Level.INFO, "[RH]Requisicao recebida e adicionada na fila, resposta da requisição: {0}", rw.getResponseObject());
         send.add(rw);
     }
     public void sendResponse(ResponseWrapper rw) throws IOException{
@@ -67,17 +67,27 @@ public class RequestHandler extends ConnectionManager implements Runnable {
         ResponseWrapper rw;
         while(!stop){
             try {
+                Logger.getLogger(this.getClass().getName()).log(Level.INFO, "[RH]Esperando por requisição");
                 acceptRequest();
-               //while(!send.isEmpty()){
+                while(send.isEmpty()){
+                    Thread.sleep(500);
+                }
+               
                     rw = send.poll();
                     rw.getResponseObject().setInQueue(send.size());
+                    Logger.getLogger(this.getClass().getName()).log(Level.INFO, "[RH]Enviando resposta");
                     getOutput().writeObject(rw.getResponse());
-                //}
+                    Logger.getLogger(this.getClass().getName()).log(Level.INFO, "[RH]Resposta Enviada");
+                    getOutput().flush();
+                    Logger.getLogger(this.getClass().getName()).log(Level.INFO, "[RH]Executando flush");
+                
             } catch (IOException ex) {
                 Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
                 stop = true;
             } catch (ClassNotFoundException ex) {
                 stop = true;
+                Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
