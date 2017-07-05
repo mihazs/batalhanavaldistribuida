@@ -43,6 +43,7 @@ public class Comunicacao {
     private Source source;
     private final int portCoordenador = 9987;
     private final int portJogadores = 9957;
+    private Thread tServer;
 
     public Comunicacao() {
         clientes = new ArrayList();
@@ -177,7 +178,8 @@ public class Comunicacao {
                 if (r.getStatus().equals(Status.OK)) {
                     if (r.getRequest().equals(req)) {
                         clienteCoordenador.stop();
-                        new Thread(servidor).start();
+                        tServer = new Thread(servidor);
+                        tServer.start();
                         Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Servidor do jogador iniciado.");
                         Thread.sleep(15000);
                         Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Content da resposta {0}", r.getContent());

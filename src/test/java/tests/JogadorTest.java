@@ -65,13 +65,13 @@ public class JogadorTest {
     }
     
     @Test
-    @Ignore
+   // @Ignore
     public void testJogador(){
         telaPrincipal.main(new String[0]);
     }
     
     @Test
-    // @Ignore
+    @Ignore
     public void testJogadorCoordenador(){
         try {
             Server servidor = new Server(9987, "resourcescoordenadorteste");

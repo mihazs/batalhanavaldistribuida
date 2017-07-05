@@ -21,7 +21,7 @@ import principalJogador.resources.DadosJogador;
  */
 public class telaPrincipal extends javax.swing.JFrame {
 
-    Comunicacao Comunicacao;
+    Comunicacao comunicacao;
     private BatalhaNaval batalhaNaval;
 
     /**
@@ -33,7 +33,7 @@ public class telaPrincipal extends javax.swing.JFrame {
         initComponents();
         
         this.batalhaNaval = BN;
-        this.Comunicacao = Comm;
+        this.comunicacao = Comm;
     }
 
     /**
@@ -136,12 +136,12 @@ public class telaPrincipal extends javax.swing.JFrame {
         lbAtaque.setText("Ataque: '" + linha + "-" + coluna + "' enviado, esperando os gritos de morte");
         
         
-        String resposta = Comunicacao.enviaAtaque(new Ataque(linha,coluna));
+        String resposta = comunicacao.enviaAtaque(new Ataque(linha,coluna));
         if (resposta.toLowerCase().startsWith("errou")) {
             int idNextPlayer = 2;
             JOptionPane.showMessageDialog(this, "Você errou, passando a vez", "Ohh", JOptionPane.INFORMATION_MESSAGE);
             Logger.getLogger(telaPrincipal.class.getName()).log(Level.INFO, "Enviando passar a vez");
-            Comunicacao.enviaPassarVez();
+            comunicacao.enviaPassarVez();
             Logger.getLogger(telaPrincipal.class.getName()).log(Level.INFO, "Enviado");
             batalhaNaval.updtJogadorAtual();
             btAtacar.setEnabled(false); //Comment
@@ -153,7 +153,7 @@ public class telaPrincipal extends javax.swing.JFrame {
                 parametro = Integer.parseInt(resposta.substring(resposta.indexOf("-")+1));
                 batalhaNaval.remPlayer(parametro);
                 Logger.getLogger(telaPrincipal.class.getName()).log(Level.INFO, "Enviando morreu");
-                Comunicacao.enviaMorreu(parametro);
+                comunicacao.enviaMorreu(parametro);
                 Logger.getLogger(telaPrincipal.class.getName()).log(Level.INFO, "Morreu enviado");
                 JOptionPane.showMessageDialog(this, "Você acertou o ataque e eliminou o inimigo de id " + parametro +"!\nJogue novamente", "Parabéns", JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -168,11 +168,11 @@ public class telaPrincipal extends javax.swing.JFrame {
     private void btStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStartActionPerformed
         String idlimites;
         
-        Comunicacao.conectaCoordenador();
         
         
         
-        idlimites = Comunicacao.esperaLimites();
+
+        idlimites = comunicacao.esperaLimites();
         Logger.getLogger(telaPrincipal.class.getName()).log(Level.INFO, "Id limites: {0}", idlimites);
         System.out.println(idlimites);
         
