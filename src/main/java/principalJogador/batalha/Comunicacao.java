@@ -182,19 +182,19 @@ public class Comunicacao {
                         Thread.sleep(5000);
                         Integer idMe = null;
                         Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Checando se existe ips da lista de ordem \n " + ips.toString() + " \n na lista: \n{0}\n", ifIps.toString());
+                        List<String> hosts = new ArrayList<>();
                         for (Entry i : ips) {
                             String k = String.valueOf(i.getValue()).replaceAll("/", "");
-                            i.setValue(k);
+                            hosts.add(k);
                             for (String ip : ifIps) {
                                 if (k.contains(ip)) {
                                     Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Removendo ip: {0}", ip);
-                                    ips.remove(i);
+                                    hosts.remove(k);
                                     break;
                                 }
                             }
                         }
-                        for (Entry i : ips) {
-                            String k = String.valueOf(i.getValue());
+                        for (String k : hosts) {
                             Client c = null;
                             while(true){
                             try{
