@@ -5,6 +5,7 @@
  */
 package resourcescoordenador;
 
+import resourcescoordenador.*;
 import coordenador.DadosCoordenador;
 import coordenador.Jogador;
 import coordenador.Mapa;
@@ -28,6 +29,9 @@ public class LobbyEntradaResource {
 
     @Path("getmapa")
     public String getMapa() {
+        
+        DadosCoordenador.executarTimer1();
+        if(!DadosCoordenador.timer.getDone()){
         source.setId(DadosCoordenador.lastId);
         DadosCoordenador.lastId++;
         Logger.getLogger(LobbyEntradaResource.class.getName()).log(Level.INFO, "Entrando na fila de espera: id {0}",source.getId() );
@@ -47,5 +51,6 @@ public class LobbyEntradaResource {
         }
         DadosCoordenador.distribuiMapas();
         return j.getMapa();
+        } return "timeout";
     }
 }

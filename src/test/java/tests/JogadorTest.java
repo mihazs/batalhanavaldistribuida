@@ -31,19 +31,6 @@ public class JogadorTest {
     
     @Test
     @Ignore
-    public void testOneCoordenador(){
-        final int port = 9987;
-        try {
-            
-            Server server = new Server(port, "resourcescoordenadorteste");
-            server.run();
-            //server2.stopServer();
-        } catch (IOException ex) {
-            Logger.getLogger(CoordenadorServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    @Test
-    @Ignore
     public void testServidorJogador() throws IOException, ClassNotFoundException{
         Server sv = new Server(9957, "principalJogador.resources");
         new Thread(sv).start();
@@ -67,28 +54,19 @@ public class JogadorTest {
     @Test
    // @Ignore
     public void testJogador(){
-        Logger.getGlobal().setLevel(Level.SEVERE);
+       // Logger.getGlobal().setLevel(Level.SEVERE);
         telaPrincipal.main(new String[0]);
     }
     
     @Test
     @Ignore
     public void testJogadorCoordenador(){
-        Logger.getGlobal().setLevel(Level.SEVERE);
-        try {
-            Server servidor = new Server(9987, "resourcescoordenadorteste");
-            Thread t = new Thread(servidor);
-      t.start();
-        } catch (IOException ex) {
-            Logger.getLogger(JogadorTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //Logger.getGlobal().setLevel(Level.SEVERE);
+         telaPrincipal.main(new String[0]);
+       CoordenadorServer.main(new String[0]);
       
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(JogadorTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        telaPrincipal.main(new String[0]);
+        
+       
        
     }
     

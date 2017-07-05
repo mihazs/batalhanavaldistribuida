@@ -82,19 +82,19 @@ public class RequestHandler extends ConnectionManager implements Runnable {
                     Logger.getLogger(this.getClass().getName()).log(Level.INFO, "[RH]Executando flush");
                 
             } catch (IOException ex) {
-                Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 stop = true;
             } catch (ClassNotFoundException ex) {
                 stop = true;
-                Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         }
         try {
             this.getSocket().close();
         } catch (IOException ex) {
-            Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 

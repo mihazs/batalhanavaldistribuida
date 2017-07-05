@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package resourcescoordenadorteste;
+package resourcescoordenador;
 
-import resourcescoordenador.*;
-import resourcescoordenadorconf.*;
+
 import messages.OrdemIp;
 import coordenador.DadosCoordenador;
 import java.util.List;
@@ -36,7 +35,6 @@ public class LobbyConfirmacaoResource {
     @Path("escolhi")
     public OrdemIp distribuiOrdem(){
        DadosCoordenador.executarTimer2();
-        System.out.println("Entrou na ordem id " + source.getId());
        if(!DadosCoordenador.timer2.getDone()){
            DadosCoordenador.resources.getConectados().add(source.getId());
         DadosCoordenador.ipsEscolhidos.put(source.getId(), serverInformation.getHostsConnected().get(source.getId()));
