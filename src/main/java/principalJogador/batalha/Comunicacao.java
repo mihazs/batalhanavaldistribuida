@@ -98,8 +98,11 @@ public class Comunicacao {
             Response rs[];
             try {
                 do {
+                    Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Enviando requisicao {0}", req);
                     c.sendRequest(req);
+                    Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Obtendo respostas");
                     rs = c.getResponses();
+                    Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Respostas obtidas: \n{0}\n", rs);
                 } while (!rs[0].getStatus().equals(Status.OK));
                 responses.add(rs[0]);
             } catch (IOException | ClassNotFoundException ex) {
