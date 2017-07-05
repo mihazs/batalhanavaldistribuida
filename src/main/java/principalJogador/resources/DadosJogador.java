@@ -13,5 +13,5 @@ import principalJogador.gui.telaPrincipal;
  */
 public class DadosJogador {
     public static telaPrincipal tp;
-    public static String ipCoordenador = "192.168.0.111";
+    public static String ipCoordenador = "192.168.0.105";
 }

@@ -52,17 +52,24 @@ public class JogadorTest {
     }
     
     @Test
-   // @Ignore
+    @Ignore
     public void testJogador(){
        // Logger.getGlobal().setLevel(Level.SEVERE);
         telaPrincipal.main(new String[0]);
     }
     
     @Test
-    @Ignore
+    //@Ignore
     public void testJogadorCoordenador(){
         //Logger.getGlobal().setLevel(Level.SEVERE);
-         telaPrincipal.main(new String[0]);
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                telaPrincipal.main(new String[0]);
+            }
+        }).start();
+         
        CoordenadorServer.main(new String[0]);
       
         
