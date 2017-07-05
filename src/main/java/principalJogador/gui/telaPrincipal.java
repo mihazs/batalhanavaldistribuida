@@ -137,7 +137,7 @@ public class telaPrincipal extends javax.swing.JFrame {
         
         
         String resposta = Comunicacao.enviaAtaque(new Ataque(linha,coluna));
-        if (resposta.toLowerCase().startsWith("errou")) {
+        if (resposta.toLowerCase().contains("errou")) {
             int idNextPlayer = 2;
             JOptionPane.showMessageDialog(this, "Você errou, passando a vez", "Ohh", JOptionPane.INFORMATION_MESSAGE);
             Logger.getLogger(telaPrincipal.class.getName()).log(Level.INFO, "Enviando passar a vez");
@@ -146,9 +146,9 @@ public class telaPrincipal extends javax.swing.JFrame {
             batalhaNaval.updtJogadorAtual();
             btAtacar.setEnabled(false); //Comment
         } else {
-            if (resposta.toLowerCase().startsWith("meAcertou")) {
+            if (resposta.toLowerCase().contains("acertou")) {
                 JOptionPane.showMessageDialog(this, "Você acertou o ataque!\nJogue novamente", "Parabéns", JOptionPane.INFORMATION_MESSAGE);
-            } else if (resposta.toLowerCase().startsWith("morri")) {
+            } else if (resposta.toLowerCase().contains("morri")) {
                 int parametro;
                 parametro = Integer.parseInt(resposta.substring(resposta.indexOf("-")+1));
                 batalhaNaval.remPlayer(parametro);
