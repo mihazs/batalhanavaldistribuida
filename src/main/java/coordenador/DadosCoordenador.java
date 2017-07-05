@@ -38,9 +38,9 @@ public class DadosCoordenador {
         return resources.getOrdem();
     }
     public static void executarTimer1(){
-        timer.executar(30);
+        timer.executar(25);
     }
     public static void executarTimer2(){
-        timer.executar(30);
+        timer2.executar(25);
     }
 }

@@ -23,7 +23,7 @@ import sockets.server.Server;
 public class JogadorTest {
     
     @Test
-    @Ignore
+    
     public void testOneCoordenador(){
         final int port = 9987;
         try {
@@ -41,7 +41,7 @@ public class JogadorTest {
     public void testCoordenador(){
         CoordenadorServer.main(new String[0]);
     }
-    
+    @Ignore
     @Test
     public void testJogador(){
         telaPrincipal.main(new String[0]);

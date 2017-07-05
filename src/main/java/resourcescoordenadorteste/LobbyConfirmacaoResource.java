@@ -36,19 +36,22 @@ public class LobbyConfirmacaoResource {
     @Path("escolhi")
     public OrdemIp distribuiOrdem(){
        DadosCoordenador.executarTimer2();
+        System.out.println("Entrou na ordem id " + source.getId());
        if(!DadosCoordenador.timer2.getDone()){
+           DadosCoordenador.resources.getConectados().add(source.getId());
         DadosCoordenador.ipsEscolhidos.put(source.getId(), serverInformation.getHostsConnected().get(source.getId()));
         while(!DadosCoordenador.timer2.getDone()){
             try {
-                Thread.sleep(500);
+                Thread.sleep(50);
             } catch (InterruptedException ex) {
                 Logger.getLogger(LobbyConfirmacaoResource.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        DadosCoordenador.resources.getConectados().add(source.getId());
+        
         OrdemIp oip = new OrdemIp();
         oip.setIp(DadosCoordenador.ipsEscolhidos);
         oip.setOrdem(DadosCoordenador.getOrdem());
+           System.out.println("Retornando ordem...");
        return oip;
        } else return null;
         

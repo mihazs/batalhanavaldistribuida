@@ -16,8 +16,8 @@ import java.util.Map;
  * @author Mihael Zamin
  */
 public class OrdemIp {
-    private List<Integer> ordem = Collections.synchronizedList(new ArrayList());
-    private Map<Integer, String> ip = Collections.synchronizedMap(new HashMap());
+    private List<Integer> ordem = new ArrayList();
+    private Map<Integer, String> ip = new HashMap();
 
     public List<Integer> getOrdem() {
         return ordem;
