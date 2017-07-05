@@ -5,18 +5,35 @@
  */
 package tests;
 
+import coordenador.DadosCoordenador;
+import coordenador.EndLobby;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
 import principalCoordenador.CoordenadorServer;
 import principalJogador.gui.telaPrincipal;
+import sockets.server.Server;
 
 /**
  *
  * @author Mihael Zamin
  */
 public class JogadorTest {
+    
+    @Test
+    public void testOneCoordenador(){
+        final int port = 9987;
+        try {
+            
+            Server server = new Server(port, "resourcescoordenadorteste");
+            server.run();
+            //server2.stopServer();
+        } catch (IOException ex) {
+            Logger.getLogger(CoordenadorServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     @Test
     @Ignore
