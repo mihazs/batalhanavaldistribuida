@@ -241,7 +241,7 @@ public class telaPrincipal extends javax.swing.JFrame {
         tP.setVisible(true);
         
         
-        System.out.println("Passou aqui antes do while");
+      
         while (tP.getBatalhaNaval().lenVetorOrdem() == 0) {
             try {    Thread.sleep(300);} catch (InterruptedException ex) {}
         }
@@ -252,40 +252,46 @@ public class telaPrincipal extends javax.swing.JFrame {
             if (batalhaNaval.minhaVez()) {
                 tP.getBatalhaNaval().enablePlaying(tP);
                 
-            } /*else {
+            } 
+            try {
+                Thread.sleep(500);
+                /*else {
                 
                 //Parte do servidor
                 
                 String mensagem = comunicacao.recebeAcao(tP.getBatalhaNaval().idJogadorAtual());
                 if (mensagem.equals("passarVez")) {
-                    batalhaNaval.updtJogadorAtual();
+                batalhaNaval.updtJogadorAtual();
                 } else if (mensagem.startsWith("morreu")) {
-                    String parametro = mensagem.substring(mensagem.indexOf("-")+1);
-                    batalhaNaval.remPlayer(Integer.parseInt(parametro));
+                String parametro = mensagem.substring(mensagem.indexOf("-")+1);
+                batalhaNaval.remPlayer(Integer.parseInt(parametro));
                 } else if (mensagem.startsWith("ataque")) {
-                    //Responde ataque
-                    int estragoTiro = tP.getBatalhaNaval().recebeTiro(mensagem.split("-")[1], mensagem.split("-")[2]);
-                    switch (estragoTiro) {
-                    //acertou
-                        case 1:
-                            comunicacao.enviaMeAcertou(batalhaNaval.getID());
-                            break;
-                    //morri
-                        case 2:
-                            comunicacao.enviaMorri(batalhaNaval.getID());
-                            break;
-                    //nao
-                        case 0:
-                            comunicacao.enviaErrou(batalhaNaval.getID());
-                            break;
-                        default:
-                            break;
-                    }
-                    
-                    
+                //Responde ataque
+                int estragoTiro = tP.getBatalhaNaval().recebeTiro(mensagem.split("-")[1], mensagem.split("-")[2]);
+                switch (estragoTiro) {
+                //acertou
+                case 1:
+                comunicacao.enviaMeAcertou(batalhaNaval.getID());
+                break;
+                //morri
+                case 2:
+                comunicacao.enviaMorri(batalhaNaval.getID());
+                break;
+                //nao
+                case 0:
+                comunicacao.enviaErrou(batalhaNaval.getID());
+                break;
+                default:
+                break;
                 }
-
-            }*/
+                
+                
+                }
+                
+                }*/
+            } catch (InterruptedException ex) {
+                Logger.getLogger(telaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
         }
         
