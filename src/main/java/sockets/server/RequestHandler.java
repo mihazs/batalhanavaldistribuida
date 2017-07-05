@@ -68,11 +68,11 @@ public class RequestHandler extends ConnectionManager implements Runnable {
         while(!stop){
             try {
                 acceptRequest();
-                while(!send.isEmpty()){
+               //while(!send.isEmpty()){
                     rw = send.poll();
                     rw.getResponseObject().setInQueue(send.size());
                     getOutput().writeObject(rw.getResponse());
-                }
+                //}
             } catch (IOException ex) {
                 Logger.getLogger(RequestHandler.class.getName()).log(Level.SEVERE, null, ex);
                 stop = true;

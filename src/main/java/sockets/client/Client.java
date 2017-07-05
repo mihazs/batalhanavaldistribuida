@@ -52,12 +52,12 @@ public class Client extends ConnectionManager{
     public Response[] getResponses() throws IOException, ClassNotFoundException{
         Response r; 
         List<Response> respostas = new ArrayList();
-        do{
+      //  do{
         r = getMessageProcessor().processResponse(String.valueOf( getInput().readObject()));
         respostas.add(r);
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Resposta recebida: {0}", r);
         this.setSource(r.getRequest().getSource());
-        }while(r.getInQueue() > 0);
+      //  }while(r.getInQueue() > 0);
         return respostas.toArray(new Response[0]);
     }
     public void sendRequest(Request request) throws IOException, ClassNotFoundException{
