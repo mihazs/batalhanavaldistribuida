@@ -198,7 +198,8 @@ public class Comunicacao {
                             Client c = null;
                             while(true){
                             try{
-                                c  = new Client(this.source, k, portJogadores);
+                                c  = new Client(this.source, k, portJogadores, 5000);
+                                
                                 Thread.sleep(500);
                                 break;
                                 } catch(SocketTimeoutException ex){
@@ -207,6 +208,7 @@ public class Comunicacao {
                                 } catch (IOException ex) {
                                     Logger.getLogger(Comunicacao.class.getName()).log(Level.SEVERE, null, ex);
                                 }
+                            c.setTimeout(0);
                             clientes.add(c);
                             }
                         }

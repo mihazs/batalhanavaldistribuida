@@ -31,10 +31,12 @@ import sockets.ConnectionManager;
 public class Client extends ConnectionManager{
     private Source source;
     
-    
     public Client(Source source, String host, int port) throws UnknownHostException, IOException{
+        this(source, host, port, 0);
+    }
+    public Client(Source source, String host, int port, int timeout) throws UnknownHostException, IOException{
         super(new Socket(InetAddress.getByName(host), port));
-        this.getSocket().setSoTimeout(0);
+        this.getSocket().setSoTimeout(timeout);
         this.source = source;
     }
     public void setTimeout(int timeout) throws SocketException{
