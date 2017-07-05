@@ -120,7 +120,7 @@ public class Server implements Runnable {
                 rh = new RequestHandler(serversocket.accept(), this, connections.size());
                 Logger.getLogger(Server.class.getName()).log(Level.INFO, "[Server] Aguardando por novas conexões");
                 connections.add(rh);
-                Logger.getLogger(Server.class.getName()).log(Level.INFO, "[Server]Conex\u00e3o estabelecida com: {0}", rh.getSocket().getInetAddress().toString());
+                Logger.getLogger(Server.class.getName()).log(Level.INFO, "[Server]Conex\u00e3o estabelecida com: {0}", rh.getSocket().getRemoteSocketAddress());
                 new Thread(rh).start();
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
