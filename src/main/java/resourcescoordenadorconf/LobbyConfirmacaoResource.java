@@ -32,9 +32,8 @@ public class LobbyConfirmacaoResource {
     public Source source;
             
     @Path("escolhi")
-    @Broadcast
     public OrdemIp distribuiOrdem(){
-        DadosCoordenador.resources.getConectados().add(source.getId());
+       if(!DadosCoordenador.timer.getDone()){
         while(!DadosCoordenador.timer.getDone()){
             try {
                 Thread.sleep(500);
@@ -42,10 +41,13 @@ public class LobbyConfirmacaoResource {
                 Logger.getLogger(LobbyConfirmacaoResource.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        DadosCoordenador.resources.getConectados().add(source.getId());
         OrdemIp oip = new OrdemIp();
         oip.setIp(serverInformation.getHostsConnected());
         oip.setOrdem(DadosCoordenador.getOrdem());
-        return oip;
+       return oip;
+       } else return null;
+        
         
     }
     
