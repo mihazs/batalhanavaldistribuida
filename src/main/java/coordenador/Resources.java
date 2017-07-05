@@ -79,7 +79,7 @@ public class Resources {
                 jaescolhido = false;
                 j = rand.nextInt(n);
                 for (int k = 0; k < ordem.size(); k++){
-                    if (ordem.get(k) == conectados.get(j)){
+                    if (ordem.get(k).equals(conectados.get(j))){
                         jaescolhido = true;
                     }
                 }
@@ -100,6 +100,15 @@ public class Resources {
     public int getNumeroJogadores(){
         return n;
     }
+
+    public boolean isConfirmados() {
+        return confirmados;
+    }
+
+    public void setConfirmados(boolean confirmados) {
+        this.confirmados = confirmados;
+    }
+    
 
     
   

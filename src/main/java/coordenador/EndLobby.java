@@ -17,7 +17,7 @@ public class EndLobby {
     private boolean Done; 
   
     
-    public void Executar(int seconds) {
+    public void executar(int seconds) {
         Done = false;
         timer = new Timer();
         timer.schedule(new RemindTask(), seconds*1000);    

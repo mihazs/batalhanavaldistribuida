@@ -9,6 +9,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import coordenador.DadosCoordenador;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import principalJogador.gui.telaPrincipal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -177,7 +178,8 @@ public class Comunicacao {
                         List<String> ifIps = Client.getInterfaceIps();
                         Set<Entry<Integer, String>> ips = Collections.synchronizedSet(oip.getIp().entrySet());
                         new Thread(servidor).start();
-                        Thread.sleep(1000);
+                        Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Servidor do jogador iniciado.");
+                        Thread.sleep(5000);
                         Integer idMe = null;
                         Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Checando se existe ips da lista de ordem \n " + ips.toString() + " \n na lista: \n{0}\n", ifIps.toString());
                         for (Entry i : ips) {
@@ -193,14 +195,32 @@ public class Comunicacao {
                         }
                         for (Entry i : ips) {
                             String k = String.valueOf(i.getValue());
-                            clientes.add(new Client(this.source, k, portJogadores));
-                            Thread.sleep(500);
+                            Client c = null;
+                            while(true){
+                            try{
+                                c  = new Client(this.source, k, portJogadores);
+                                Thread.sleep(500);
+                                break;
+                                } catch(SocketTimeoutException ex){
+                                    Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Socket do cliente timed out");
+
+                                } catch (IOException ex) {
+                                    Logger.getLogger(Comunicacao.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            clientes.add(c);
+                            }
                         }
-                        break;
+                            
+                        }
+                       
                     }
+                break;
                 }
             }
-        } catch (IOException | ClassNotFoundException | InterruptedException ex) {
+        
+         catch (ClassNotFoundException | InterruptedException ex) {
+            Logger.getLogger(Comunicacao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(Comunicacao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listOrdem;

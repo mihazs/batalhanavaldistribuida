@@ -28,7 +28,7 @@ public class DadosCoordenador {
         }
     }
     public static List<Integer> getOrdem(){
-        if(resources.getOrdem() == null)
+        if(!resources.isConfirmados())
             resources.setOrdem();
         return resources.getOrdem();
     }

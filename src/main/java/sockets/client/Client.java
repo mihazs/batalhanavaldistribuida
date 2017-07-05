@@ -37,7 +37,9 @@ public class Client extends ConnectionManager{
         this.getSocket().setSoTimeout(0);
         this.source = source;
     }
-    
+    public void setTimeout(int timeout) throws SocketException{
+        this.getSocket().setSoTimeout(timeout);
+    }
     public Source getSource() {
         return source;
     }
