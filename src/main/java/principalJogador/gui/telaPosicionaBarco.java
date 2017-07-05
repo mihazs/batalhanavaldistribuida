@@ -139,14 +139,15 @@ public class telaPosicionaBarco extends javax.swing.JFrame {
     
     
     private void btPosicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPosicionarActionPerformed
-        
+        if (!tP.getBatalhaNaval().acabouBarcos()) {
         tP.getBatalhaNaval().posicionaBarco(lbBarco.getText(), txtLinhaInicial.getText(), txtColunaInicial.getText(), txtOrientacao.getText());
         this.lbBarco.setText("" + tP.getBatalhaNaval().barcoColocado(0));
         this.lbRestantes.setText("(" + tP.getBatalhaNaval().barcosRestantes() + " restando)");
         
         tP.getBatalhaNaval().printMar();
         
-        if (tP.getBatalhaNaval().acabouBarcos()) {
+        
+        } else{
             ArrayList<Integer> ordem;
             //tP.batalhaNaval.Pronto = true;
             
@@ -154,7 +155,8 @@ public class telaPosicionaBarco extends javax.swing.JFrame {
             ordem = tP.Comunicacao.esperaOrdem();
             tP.getBatalhaNaval().iniciaOrdem(ordem);
             this.setVisible(false);
-        } 
+            
+        }
     }//GEN-LAST:event_btPosicionarActionPerformed
 
     
