@@ -29,13 +29,13 @@ public class JogadorResources {
        int feedbackTiro = DadosJogador.tp.getBatalhaNaval().recebeTiro(a.getLinha(), a.getColuna());
         
         switch(feedbackTiro){
-            case 0:
+            case 1:
             s = "acertou";
                 break;
-            case 1:
+            case 2:
                 s = "morri";
                 break;
-            case 2:
+            case 0:
                 s = "errou";
                 break;
             default:
