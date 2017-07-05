@@ -170,18 +170,16 @@ public class Comunicacao {
             clienteCoordenador.sendRequest(req);
             Response[] responses = clienteCoordenador.getResponses();
             Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Verificando respostas de esperaOrdem");
-            for (Response r : responses) {
+            Response r = responses[0];
                 if (r.getStatus().equals(Status.OK)) {
                     if (r.getRequest().equals(req)) {
                         new Thread(servidor).start();
+                        Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Servidor do jogador iniciado.");
+                        Thread.sleep(15000);
                         OrdemIp oip = (OrdemIp) (r.getContent());
                         listOrdem = new ArrayList(oip.getOrdem());
                         List<String> ifIps = Client.getInterfaceIps();
                         Set<Entry<Integer, String>> ips = Collections.synchronizedSet(oip.getIp().entrySet());
-                        Thread tservidor = new Thread(servidor);
-                        tservidor.start();
-                        Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Servidor do jogador iniciado.");
-                        Thread.sleep(15000);
                         Integer idMe = null;
                         Logger.getLogger(Comunicacao.class.getName()).log(Level.INFO, "Checando se existe ips da lista de ordem \n " + ips.toString() + " \n na lista: \n{0}\n", ifIps.toString());
                         List<String> hosts = new ArrayList<>();
@@ -216,10 +214,10 @@ public class Comunicacao {
                         
                             
                         }
-                       break;
+                       
                     }
                 
-                }
+                
             }
         
          catch (ClassNotFoundException | InterruptedException ex) {
