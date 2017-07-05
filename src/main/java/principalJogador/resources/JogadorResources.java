@@ -46,8 +46,8 @@ public class JogadorResources {
     }
     
     @Path("notadefalecimento")
-    public void morte(@ParamName("id") int idMorto){
-        DadosJogador.tp.getBatalhaNaval().remPlayer(idMorto);
+    public void morte(@ParamName("id") Integer idMorto){
+        DadosJogador.tp.getBatalhaNaval().remPlayer(idMorto.intValue());
     }
     
     @Path("passarvez")
