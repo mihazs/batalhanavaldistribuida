@@ -140,7 +140,10 @@ public class telaPrincipal extends javax.swing.JFrame {
         if (resposta.toLowerCase().startsWith("errou")) {
             int idNextPlayer = 2;
             JOptionPane.showMessageDialog(this, "Você errou, passando a vez", "Ohh", JOptionPane.INFORMATION_MESSAGE);
+            Logger.getLogger(telaPrincipal.class.getName()).log(Level.INFO, "Enviando passar a vez");
             Comunicacao.enviaPassarVez();
+            Logger.getLogger(telaPrincipal.class.getName()).log(Level.INFO, "Enviado");
+            batalhaNaval.updtJogadorAtual();
             btAtacar.setEnabled(false); //Comment
         } else {
             if (resposta.toLowerCase().startsWith("meAcertou")) {
@@ -149,7 +152,9 @@ public class telaPrincipal extends javax.swing.JFrame {
                 int parametro;
                 parametro = Integer.parseInt(resposta.substring(resposta.indexOf("-")+1));
                 batalhaNaval.remPlayer(parametro);
+                Logger.getLogger(telaPrincipal.class.getName()).log(Level.INFO, "Enviando morreu");
                 Comunicacao.enviaMorreu(parametro);
+                Logger.getLogger(telaPrincipal.class.getName()).log(Level.INFO, "Morreu enviado");
                 JOptionPane.showMessageDialog(this, "Você acertou o ataque e eliminou o inimigo de id " + parametro +"!\nJogue novamente", "Parabéns", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 throw new UnsupportedOperationException("Not supported yet.");
@@ -242,13 +247,11 @@ public class telaPrincipal extends javax.swing.JFrame {
         }
         //System.out.println(!batalhaNaval.perdi());
         while (!batalhaNaval.perdi()) {
-            System.out.println("Eu: " + tP.getBatalhaNaval().getID() + " Agora: " + tP.getBatalhaNaval().idJogadorAtual());
+        //    System.out.println("Eu: " + tP.getBatalhaNaval().getID() + " Agora: " + tP.getBatalhaNaval().idJogadorAtual());
             
             if (batalhaNaval.minhaVez()) {
                 tP.getBatalhaNaval().enablePlaying(tP);
-                while (tP.btAtacar.isEnabled()) {
-                    try {    Thread.sleep(300);} catch (InterruptedException ex) {}
-                }
+                
             } /*else {
                 
                 //Parte do servidor
