@@ -24,7 +24,10 @@ public class JogadorTest {
         CoordenadorServer.main(new String[0]);
     }
     
-    
+    @Test
+    public void testJogador(){
+        telaPrincipal.main(new String[0]);
+    }
     
     @Test
     public void testJogadorCoordenador(){
